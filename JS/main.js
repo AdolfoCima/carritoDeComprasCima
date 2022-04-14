@@ -46,14 +46,19 @@ function ready() {
   }
 
   //Boton Comprar ahora
-  document.getElementsByClassName("btn-buy")[0].addEventListener("click", buyButtonClicked);
+  document
+    .getElementsByClassName("btn-buy")[0]
+    .addEventListener("click", buyButtonClicked);
 }
 
-//Funcion buyButtonClicked
+//Funcion buyButtonClicked 
 function buyButtonClicked() {
-  alert("Su orden fue completada.");
-  alert("Gracias por su compra!");
- 
+  alert("Gracias por su compra!!!");
+  let cartContent = document.getElementsByClassName("cart-content")[0];
+  while (cartContent.hasChildNodes()) {
+    cartContent.removeChild(cartContent.firstChild);
+  }
+  updateTotal();
 }
 
 /////////////////////Funcion removeCartItem
@@ -126,7 +131,9 @@ function updateTotal() {
     let price = parseFloat(priceElement.innerText.replace("$", ""));
     let quantity = quantityElement.value;
     total = total + price * quantity;
-    //console.log(total);
-    document.getElementsByClassName("total-price")[0].innerText = "$" + total;
   }
+  //Redondear precios
+  total = Math.round(total * 100) / 100;
+  //console.log(total);
+  document.getElementsByClassName("total-price")[0].innerText = "$" + total;
 }
