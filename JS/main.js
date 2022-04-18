@@ -14,7 +14,6 @@ closeCart.onclick = () => {
 };
 
 //Carrito funcionando
-
 if (document.readyState == "loading") {
   document.addEventListener("DOMContentLoaded", ready);
 } else {
@@ -22,7 +21,6 @@ if (document.readyState == "loading") {
 }
 
 //Funcion ready
-
 function ready() {
   let removeCartButtons = document.getElementsByClassName("cart-remove");
   //console.log(removeCartButtons);
@@ -51,7 +49,7 @@ function ready() {
     .addEventListener("click", buyButtonClicked);
 }
 
-//Funcion buyButtonClicked 
+//Funcion buyButtonClicked
 function buyButtonClicked() {
   alert("Gracias por su compra!!!");
   let cartContent = document.getElementsByClassName("cart-content")[0];
@@ -101,13 +99,13 @@ function addProductToCart(title, price, productImg) {
     }
   }
 
-  let cartBoxContent = ` <img src="${productImg}" alt="" class="cart-img" />
-  <div class="detail-box">
-  <div class="cart-product-title">${title}</div>
-  <div class="cart-price">${price}</div>
-  <input type="number" value="1" class="cart-quantity" />
-  </div>
-  <i class="bx bxs-trash-alt cart-remove"></i> `;
+  let cartBoxContent = `<img src="${productImg}" alt="" class="cart-img" />
+                        <div class="detail-box">
+                          <div class="cart-product-title">${title}</div>
+                          <div class="cart-price">${price}</div>
+                          <input type="number" value="1" class="cart-quantity" />
+                        </div>
+                        <i class="bx bxs-trash-alt cart-remove"></i> `;
   cartShopBox.innerHTML = cartBoxContent;
   cartItems.append(cartShopBox);
   cartShopBox
