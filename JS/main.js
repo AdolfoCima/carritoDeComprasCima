@@ -1,3 +1,93 @@
+//Productos
+const products = [
+  {
+    id: 1,
+    img: "img/gd5480_app_photo_front-center_white.jpg",
+    title: "CAMPERA ADIDAS ORIGINALS",
+    price: "$20000",
+  },
+  {
+    id: 2,
+    img: "img/converseChuckTylor.jpg",
+    title: "CONVERSE CHUCKTYLOR",
+    price: "$12500",
+  },
+  {
+    id: 3,
+    img: "img/adidasForumMid.jpg",
+    title: "ADIDAS FORUM MID",
+    price: "$28997",
+  },
+  {
+    id: 4,
+    img: "img/gorraAdidasOriginals.jpg",
+    title: "GORRA ORIGINALS",
+    price: "$6000",
+  },
+  {
+    id: 5,
+    img: "img/product1.jpg",
+    title: "REMERA AEROREADY",
+    price: "$5997",
+  },
+  {
+    id: 6,
+    img: "img/product4.jpg",
+    title: "BOTELLA DEPORTIVA",
+    price: "$3799",
+  },
+  {
+    id: 7,
+    img: "img/headphonesAdidas.jpg",
+    title: "HEADSET ADIDAS",
+    price: "$32799",
+  },
+  {
+    id: 8,
+    img: "img/Maleta_Deportiva_Tiro_Primegreen_Mediana_Azul_GH7267_01_standard.jpg",
+    title: "MALETA DEPORTIVA",
+    price: "$10799",
+  },
+];
+
+const shopContent = document.querySelector(".shop-content");
+
+//Cargar productos
+document.addEventListener("DOMContentLoaded", () => {
+  showProducts();
+});
+
+//Funcion showProducts
+function showProducts() {
+  products.forEach((product) => {
+    //Scripting
+    const productBox = document.createElement("div");
+    productBox.classList.add("product-box");
+
+    const productImg = document.createElement("img");
+    productImg.src = product.img;
+    productImg.classList.add("product-img");
+
+    const productTitle = document.createElement("h2");
+    productTitle.textContent = product.title;
+    productTitle.classList.add("product-title");
+
+    const productPrice = document.createElement("span");
+    productPrice.textContent = product.price;
+    productPrice.classList.add("price");
+
+    const productButton = document.createElement("i");
+    productButton.className = "bx bx-shopping-bag add-cart";
+
+    productBox.appendChild(productImg);
+    productBox.appendChild(productTitle);
+    productBox.appendChild(productPrice);
+    productBox.appendChild(productButton);
+
+    shopContent.appendChild(productBox);
+  });
+}
+
 //Carrito
 let cartIcon = document.querySelector("#cart-icon");
 let cart = document.querySelector(".cart");
@@ -51,7 +141,7 @@ function ready() {
     .addEventListener("click", buyButtonClicked);
 }
 
-//Funcion buyButtonClicked 
+//Funcion buyButtonClicked
 function buyButtonClicked() {
   alert("Gracias por su compra!!!");
   let cartContent = document.getElementsByClassName("cart-content")[0];
