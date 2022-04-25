@@ -50,6 +50,13 @@ const products = [
   },
 ];
 
+let cartProducts = [];
+if (window.localStorage.getItem("chCart")) {
+  cartProducts = JSON.parse(window.localStorage.getItem("chCart"));
+  renderCart();
+  updateTotal();
+}
+
 const shopContent = document.querySelector(".shop-content");
 
 //Cargar productos
@@ -78,6 +85,7 @@ function showProducts() {
 
     const productButton = document.createElement("i");
     productButton.className = "bx bx-shopping-bag add-cart";
+    productButton.addEventListener("click", () => addCartCLicked(product));
 
     productBox.appendChild(productImg);
     productBox.appendChild(productTitle);
@@ -112,27 +120,6 @@ if (document.readyState == "loading") {
 
 //Funcion ready
 function ready() {
-  let removeCartButtons = document.getElementsByClassName("cart-remove");
-  //console.log(removeCartButtons);
-  for (let i = 0; i < removeCartButtons.length; i++) {
-    let button = removeCartButtons[i];
-    button.addEventListener("click", removeCartItem);
-  }
-
-  //cambiar cantidad
-  let quantityInputs = document.getElementsByClassName("cart-quantity");
-  for (let i = 0; i < quantityInputs.length; i++) {
-    let input = quantityInputs[i];
-    input.addEventListener("change", quantityChanged);
-  }
-
-  //Agregar items al carrito
-  let addCart = document.getElementsByClassName("add-cart");
-  for (let i = 0; i < addCart.length; i++) {
-    let button = addCart[i];
-    button.addEventListener("click", addCartCLicked);
-  }
-
   //Boton Comprar ahora
   document
     .getElementsByClassName("btn-buy")[0]
@@ -142,86 +129,89 @@ function ready() {
 //Funcion buyButtonClicked
 function buyButtonClicked() {
   alert("Gracias por su compra!!!");
-  let cartContent = document.getElementsByClassName("cart-content")[0];
-  while (cartContent.hasChildNodes()) {
-    cartContent.removeChild(cartContent.firstChild);
-  }
+  cartProducts = [];
+  renderCart();
+  updateLocalStorage();
   updateTotal();
 }
 
 /////////////////////Funcion removeCartItem
-function removeCartItem(event) {
-  let buttonClicked = event.target;
-  buttonClicked.parentElement.remove();
+function removeCartItem(index) {
+  cartProducts.splice(index, 1);
+  renderCart();
+  updateLocalStorage();
   updateTotal();
 }
 
 //////////////////////Cambios de cantidad
-function quantityChanged(event) {
+function quantityChanged(event, product) {
   let input = event.target;
-  if (isNaN(input.value) || input.value <= 0) {
-    input.value = 0;
+  if (isNaN(input.value) || input.value <= 1) {
+    input.value = 1;
   }
+  product.quantity = +input.value;
+  updateLocalStorage();
   updateTotal();
 }
 
 ////////////////////Funcion addCartClicked
-function addCartCLicked(event) {
-  let button = event.target;
-  let shopProducts = button.parentElement;
-  let title = shopProducts.getElementsByClassName("product-title")[0].innerText;
-  let price = shopProducts.getElementsByClassName("price")[0].innerText;
-  let productImg = shopProducts.getElementsByClassName("product-img")[0].src;
-  addProductToCart(title, price, productImg);
-  updateTotal();
+function addCartCLicked(product) {
+  product.quantity = 1;
+  if (cartProducts.find((productInCart) => productInCart.id === product.id)) {
+    alert("Ya agregaste este item al carrito");
+  } else {
+    cartProducts.push(product);
+    renderCart();
+    updateLocalStorage();
+    updateTotal();
+  }
 }
 
 ///////////////// Agregar productos al carrito
-function addProductToCart(title, price, productImg) {
+
+function renderCart() {
+  const cartItems = document.getElementsByClassName("cart-content")[0];
+  cartItems.innerHTML = "";
+  cartProducts.forEach((product, index) => {
+    renderProduct(product, index);
+  });
+}
+
+function renderProduct(product, i) {
   let cartShopBox = document.createElement("div");
   cartShopBox.classList.add("cart-box");
-  let cartItems = document.getElementsByClassName("cart-content")[0];
-  let cartItemsNames = cartItems.getElementsByClassName("cart-product-title");
-  for (let i = 0; i < cartItemsNames.length; i++) {
-    if (cartItemsNames[i].innerText == title) {
-      alert("Ya agregaste este item al carrito");
-      return;
-    }
-  }
-
-  let cartBoxContent = `<img src="${productImg}" alt="" class="cart-img" />
+  const cartItems = document.getElementsByClassName("cart-content")[0];
+  let cartBoxContent = `<img src="${product.img}" alt="" class="cart-img" />
                         <div class="detail-box">
-                          <div class="cart-product-title">${title}</div>
-                          <div class="cart-price">${price}</div>
-                          <input type="number" value="1" class="cart-quantity" />
+                          <div class="cart-product-title">${product.title}</div>
+                          <div class="cart-price">${product.price}</div>
+                          <input type="number" value=${product.quantity} class="cart-quantity" />
                         </div>
                         <i class="bx bxs-trash-alt cart-remove"></i> `;
   cartShopBox.innerHTML = cartBoxContent;
   cartItems.append(cartShopBox);
   cartShopBox
     .getElementsByClassName("cart-remove")[0]
-    .addEventListener("click", removeCartItem);
+    .addEventListener("click", () => removeCartItem(i));
   cartShopBox
     .getElementsByClassName("cart-quantity")[0]
-    .addEventListener("change", quantityChanged);
+    .addEventListener("change", (event) => quantityChanged(event, product));
 }
 
 ////////////////////////Actualizar total
 function updateTotal() {
-  let cartContent = document.getElementsByClassName("cart-content")[0];
-  let cartBoxes = cartContent.getElementsByClassName("cart-box");
-  let total = 0;
 
-  for (let i = 0; i < cartBoxes.length; i++) {
-    let cartBox = cartBoxes[i];
-    let priceElement = cartBox.getElementsByClassName("cart-price")[0];
-    let quantityElement = cartBox.getElementsByClassName("cart-quantity")[0];
-    let price = parseFloat(priceElement.innerText.replace("$", ""));
-    let quantity = quantityElement.value;
-    total = total + price * quantity;
-  }
+  let total = cartProducts.reduce((acumulador, product) => {
+    const price = +product.price.replace("$", "");
+    return acumulador + price * product.quantity;
+  }, 0);
+
   //Redondear precios
   total = Math.round(total * 100) / 100;
   //console.log(total);
   document.getElementsByClassName("total-price")[0].innerText = "$" + total;
+}
+
+function updateLocalStorage() {
+  window.localStorage.setItem("chCart", JSON.stringify(cartProducts));
 }
