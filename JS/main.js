@@ -132,7 +132,11 @@ function ready() {
 
 //Funcion buyButtonClicked
 function buyButtonClicked() {
-  alert('Gracias por su compra!!!');
+  swal({
+    title: "Muchas gracias por su compra!",
+    text: "La transacción se realizó con éxito",
+    icon: "success",
+  });
   cartProducts = [];
   renderCart();
   updateLocalStorage();
