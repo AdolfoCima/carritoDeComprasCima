@@ -1,54 +1,5 @@
 //Productos
-const products = [
-  {
-    id: 1,
-    img: 'img/gd5480_app_photo_front-center_white.jpg',
-    title: 'CAMPERA ADIDAS ORIGINALS',
-    price: '$20000',
-  },
-  {
-    id: 2,
-    img: 'img/converseChuckTylor.jpg',
-    title: 'CONVERSE CHUCKTYLOR',
-    price: '$12500',
-  },
-  {
-    id: 3,
-    img: 'img/adidasForumMid.jpg',
-    title: 'ADIDAS FORUM MID',
-    price: '$28997',
-  },
-  {
-    id: 4,
-    img: 'img/gorraAdidasOriginals.jpg',
-    title: 'GORRA ORIGINALS',
-    price: '$6000',
-  },
-  {
-    id: 5,
-    img: 'img/product1.jpg',
-    title: 'REMERA AEROREADY',
-    price: '$5997',
-  },
-  {
-    id: 6,
-    img: 'img/product4.jpg',
-    title: 'BOTELLA DEPORTIVA',
-    price: '$3799',
-  },
-  {
-    id: 7,
-    img: 'img/headphonesAdidas.jpg',
-    title: 'HEADSET ADIDAS',
-    price: '$32799',
-  },
-  {
-    id: 8,
-    img: 'img/Maleta_Deportiva_Tiro_Primegreen_Mediana_Azul_GH7267_01_standard.jpg',
-    title: 'MALETA DEPORTIVA',
-    price: '$10799',
-  },
-];
+let products = [];
 
 let cartProducts = [];
 if (window.localStorage.getItem('chCart')) {
@@ -61,7 +12,13 @@ const shopContent = document.querySelector('.shop-content');
 
 //Cargar productos
 document.addEventListener('DOMContentLoaded', () => {
-  showProducts();
+  // fetch products -> showProducts
+  fetch('/data.json')
+    .then((res) => res.json())
+    .then((productsFetched) => {
+      products = productsFetched;
+      showProducts();
+    });
 });
 
 //Funcion showProducts
@@ -133,9 +90,9 @@ function ready() {
 //Funcion buyButtonClicked
 function buyButtonClicked() {
   swal({
-    title: "Muchas gracias por su compra!",
-    text: "La transacción se realizó con éxito",
-    icon: "success",
+    title: 'Muchas gracias por su compra!',
+    text: 'La transacción se realizó con éxito',
+    icon: 'success',
   });
   cartProducts = [];
   renderCart();
