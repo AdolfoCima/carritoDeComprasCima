@@ -46,5 +46,53 @@
         "img": "img/Maleta_Deportiva_Tiro_Primegreen_Mediana_Azul_GH7267_01_standard.jpg",
         "title": "MALETA DEPORTIVA",
         "price": "$10799"
+    },
+    {
+        "id": 9,
+        "img": "img/FT7410-A.jpg",
+        "title": "REMERA REEBOK (L)",
+        "price": "$5000"
+    },
+    {
+        "id": 10,
+        "img": "img/FM5617-A.jpg",
+        "title": "CONJUNTO ADIDAS NIÑO",
+        "price": "$15000"
+    },
+    {
+        "id": 11,
+        "img": "img/pelotaBasketNike.jpg",
+        "title": "PELOTA DE BASKET PROFESIONAL NIKE",
+        "price": "$11000"
+    },
+    {
+        "id": 12,
+        "img": "img/FM5624-A.jpg",
+        "title": "CONJUNTO ADIDAS",
+        "price": "$14500"
+    },
+    {
+        "id": 13,
+        "img": "img/pantalonAdidas.jpg",
+        "title": "PANTALON ADIDAS",
+        "price": "$11500"
+    },
+    {
+        "id": 14,
+        "img": "img/gorraTruckerAdidas.jpg",
+        "title": "GORRA TRUCKER ADIDAS",
+        "price": "$5500"
+    },
+    {
+        "id": 15,
+        "img": "img/beanieAdidas.jpg",
+        "title": "GORRO ADIDAS",
+        "price": "$5500"
+    },
+    {
+        "id": 16,
+        "img": "img/mediasAdidas.jpg",
+        "title": "MEDIAS ADIDAS CREW (3 PARES)",
+        "price": "$3500"
     }
 ]

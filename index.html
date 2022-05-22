@@ -8,10 +8,18 @@
     <title>Tienda Deportes - Carrito de Compras</title>
     <!-- Link a CSS-->
     <link rel="stylesheet" href="/CSS/style.css" />
+    <!-- Link a Bootstrap-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous" defer></script>
     <!-- Link a Box Icons-->
     <link href="https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css" rel="stylesheet" />
+    <!-- Link jquery-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js" defer></script>
     <!-- Link Sweet Alert-->
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js" defer></script>
+    <!------------Link a FontAwesome---------------->
+    <script src="https://kit.fontawesome.com/b67360ca9b.js" crossorigin="anonymous" defer></script>
     <!------------Link a JS---------------->
     <script src="/JS/main.js" defer></script>
 </head>
@@ -21,10 +29,11 @@
     <header>
         <!------- Inicio navBar-------->
         <div class="nav container">
-            <a href="#" class="logo">Tienda Deportes</a>
+            <a href="#" class="logo">Outlet de Deportes</a>
         </div>
         <!---------- Icono Carrito------->
-        <i class="bx bx-shopping-bag" id="cart-icon"></i>
+        <i class="bx bx-shopping-bag btn btn-primary" id="cart-icon"></i>
+        <span class="badge bg-secondary item-numb">0</span>
         <!------------Carrito------------>
         <div class="cart">
             <h2 class="cart-title">Su Carrito</h2>
