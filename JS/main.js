@@ -42,6 +42,7 @@ function showProducts() {
 
     const productButton = document.createElement('i');
     productButton.className = 'bx bx-shopping-bag add-cart';
+    productButton.id = 'add-animation';
     productButton.addEventListener('click', () => addCartCLicked(product));
 
     productBox.appendChild(productImg);
@@ -135,41 +136,74 @@ function addCartCLicked(product) {
 ///////////////// Agregar productos al carrito
 
 function renderCart() {
+  
+  
   const cartItems = document.getElementsByClassName('cart-content')[0];
   cartItems.innerHTML = '';
   cartProducts.forEach((product, index) => {
+   
     renderProduct(product, index);
   });
+  
 }
 
 function renderProduct(product, i) {
   let cartShopBox = document.createElement('div');
   cartShopBox.classList.add('cart-box');
   const cartItems = document.getElementsByClassName('cart-content')[0];
-  let cartBoxContent = `<img src="${product.img}" alt="" class="cart-img" />
-                        <div class="detail-box">
-                          <div class="cart-product-title">${product.title}</div>
-                          <div class="cart-price">${product.price}</div>
-                          <input type="number" value=${product.quantity} class="cart-quantity" />
-                        </div>
-                        <i class="bx bxs-trash-alt cart-remove"></i> `;
-  cartShopBox.innerHTML = cartBoxContent;
+
+  let productImg = document.createElement('img');
+  productImg.classList.add('cart-img');
+  productImg.src = product.img;
+
+  let detailBox = document.createElement('div');
+  detailBox.classList.add('detail-box');
+
+  let cartProductTitle = document.createElement('div');
+  cartProductTitle.classList.add('cart-product-title');
+  cartProductTitle.innerText = product.title
+
+  let cartPrice = document.createElement('div');
+  cartPrice.classList.add('cart-price');
+  cartPrice.innerText = product.price;
+
+  let cartQtyInput = document.createElement('input');
+  cartQtyInput.classList.add('cart-quantity');
+  cartQtyInput.type = 'number';
+  cartQtyInput.value = +product.quantity;
+  cartQtyInput.addEventListener('change', (event) => quantityChanged(event, product));
+
+  let icon = document.createElement('i');
+  icon.classList.add('bx');
+  icon.classList.add('bxs-trash-alt');
+  icon.classList.add('cart-remove');
+  icon.addEventListener('click', () => removeCartItem(i));
+
+  detailBox.append(cartProductTitle)
+  detailBox.append(cartPrice)
+  detailBox.append(cartQtyInput)
+
+  cartShopBox.append(productImg)
+  cartShopBox.append(detailBox)
+  cartShopBox.append(icon)
+
   cartItems.append(cartShopBox);
-  cartShopBox
-    .getElementsByClassName('cart-remove')[0]
-    .addEventListener('click', () => removeCartItem(i));
-  cartShopBox
-    .getElementsByClassName('cart-quantity')[0]
-    .addEventListener('change', (event) => quantityChanged(event, product));
+
 }
 
 ////////////////////////Actualizar total
 function updateTotal() {
-  let total = cartProducts.reduce((acumulador, product) => {
-    const price = +product.price.replace('$', '');
-    return acumulador + price * product.quantity;
-  }, 0);
+  const cartQty = document.getElementById('cartQty');
 
+  let quantity = cartProducts.reduce((acumulator, product) =>{
+    return acumulator + product.quantity;
+  }, 0)
+  let total = cartProducts.reduce((acumulator, product) => {
+    const price = +product.price.replace('$', '');
+    return acumulator + price * product.quantity;
+  }, 0);
+  
+  cartQty.innerText = quantity;
   //Redondear precios
   total = Math.round(total * 100) / 100;
   //console.log(total);
